@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Blog from './components/Blog';
+import Notification from './components/Notification';
 import blogService from './services/blogs';
 import loginService from './services/login';
 
@@ -11,6 +12,7 @@ const App = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
+  const [notice, setNotice] = useState(null);
 
   useEffect(() => {
     blogService.getAll().then((blogs) => {
@@ -23,8 +25,16 @@ const App = () => {
     if (loggedInUserJSON) {
       const user = JSON.parse(loggedInUserJSON);
       setUser(user);
+      blogService.setToken(user.token);
     }
   }, []);
+
+  const noticeContent = ( message, error=false ) => {
+    setNotice({ message, error });
+    setTimeout(() => {
+      setNotice(null);
+    }, 5000);
+  };
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -37,32 +47,39 @@ const App = () => {
       );
       blogService.setToken(user.token);
       setUser(user);
+      noticeContent(`${user.name} logged in successfully`);
       setUsername('');
       setPassword('');
     } catch (exception) {
-      console.log(exception);
+      noticeContent('Invalid username or password', true);
     }
   };
 
   const handleLogout = (event) => {
     window.localStorage.removeItem('loggedInUser');
+    noticeContent(`${user.name} logged out successfully`);
     setUser(null);
   };
 
   const addBlog = async (event) => {
     event.preventDefault();
 
-    const blogObject = {
-      title,
-      author,
-      url
-    };
+    try {
+      const blogObject = {
+        title,
+        author,
+        url
+      };
 
-    const createdBlog = await blogService.create(blogObject);
-    setBlogs(blogs.concat(createdBlog));
-    setTitle('');
-    setAuthor('');
-    setUrl('');
+      const createdBlog = await blogService.create(blogObject);
+      setBlogs(blogs.concat(createdBlog));
+      noticeContent(`A new blog '${createdBlog.title}' by ${createdBlog.author} added`);
+      setTitle('');
+      setAuthor('');
+      setUrl('');
+    } catch (exception) {
+      noticeContent('Title and url are required to add new blog', true);
+    }
   };
 
   return (
@@ -70,6 +87,7 @@ const App = () => {
     {user === null
       ? <>
           <h2>log in to application</h2>
+          <Notification notice={notice} />
           <form onSubmit={handleLogin}>
             <div>
               username
@@ -94,6 +112,7 @@ const App = () => {
         </>
       : <>
           <h2>blogs</h2>
+          <Notification notice={notice} />
           <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
           <h2>create new</h2>
           <form onSubmit={addBlog}>
