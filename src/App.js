@@ -13,6 +13,7 @@ const App = () => {
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
   const [notice, setNotice] = useState(null);
+  const [createBlogFormVisible, setCreateBlogFormVisible] = useState(false);
 
   useEffect(() => {
     blogService.getAll().then((blogs) => {
@@ -28,6 +29,9 @@ const App = () => {
       blogService.setToken(user.token);
     }
   }, []);
+
+  const hideWhenVisible = { display: createBlogFormVisible ? 'none' : '' };
+  const showWhenVisible = { display: createBlogFormVisible ? '' : 'none' };
 
   const noticeContent = ( message, error=false ) => {
     setNotice({ message, error });
@@ -77,6 +81,7 @@ const App = () => {
       setTitle('');
       setAuthor('');
       setUrl('');
+      setCreateBlogFormVisible(false);
     } catch (exception) {
       noticeContent('Title and url are required to add new blog', true);
     }
@@ -114,37 +119,43 @@ const App = () => {
           <h2>blogs</h2>
           <Notification notice={notice} />
           <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
-          <h2>create new</h2>
-          <form onSubmit={addBlog}>
-            <div>
-              title:
-              <input
-                type='text'
-                value={title}
-                name='Title'
-                onChange={({ target }) => setTitle(target.value)}
-              />
-            </div>
-            <div>
-              author:
-              <input
-                type='text'
-                value={author}
-                name='Author'
-                onChange={({ target }) => setAuthor(target.value)}
-              />
-            </div>
-            <div>
-              url:
-              <input
-                type='text'
-                value={url}
-                name='Url'
-                onChange={({ target }) => setUrl(target.value)}
-              />
-            </div>
-            <button type='submit'>create</button>
-          </form>
+          <div style={hideWhenVisible}>
+            <button onClick={() => setCreateBlogFormVisible(true)}>create new blog</button>
+          </div>
+          <div style={showWhenVisible}>
+            <h2>create new</h2>
+            <form onSubmit={addBlog}>
+              <div>
+                title:
+                <input
+                  type='text'
+                  value={title}
+                  name='Title'
+                  onChange={({ target }) => setTitle(target.value)}
+                />
+              </div>
+              <div>
+                author:
+                <input
+                  type='text'
+                  value={author}
+                  name='Author'
+                  onChange={({ target }) => setAuthor(target.value)}
+                />
+              </div>
+              <div>
+                url:
+                <input
+                  type='text'
+                  value={url}
+                  name='Url'
+                  onChange={({ target }) => setUrl(target.value)}
+                />
+              </div>
+              <button type='submit'>create</button>
+            </form>
+            <button onClick={() => setCreateBlogFormVisible(false)}>cancel</button>
+          </div>
           {blogs.map((blog) =>
            <Blog key={blog.id} blog={blog} />
           )}
