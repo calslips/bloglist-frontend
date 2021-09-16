@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import Likes from './Likes';
 
 const Blog = ({ blog }) => {
-  const [displayInfo, setDisplayInfo] = useState(false);
+  const [showAllInfo, setShowAllInfo] = useState(false);
+
+  const minBlogInfo = { display: showAllInfo ? 'none' : '' };
+  const maxBlogInfo = { display: showAllInfo ? '' : 'none' };
 
   const blogStyle = {
     paddingTop: 5,
@@ -12,17 +16,21 @@ const Blog = ({ blog }) => {
     marginBottom: 5
   };
 
-  return (
+    return (
     <div style={blogStyle}>
-      {displayInfo
-        ? <>
-          <p>{blog.title} - {blog.author} <button onClick={() => setDisplayInfo(false)}>hide</button></p>
-          <p>{blog.url}</p>
-          <p>likes {blog.likes} <button>like</button></p>
-          <p>{blog.user.name}</p>
-          </>
-        : <p>{blog.title} - {blog.author} <button onClick={() => setDisplayInfo(true)}>view</button></p>
-      }
+      <div style={maxBlogInfo}>
+        <p>{blog.title} - {blog.author}
+          <button onClick={() => setShowAllInfo(false)}>hide</button>
+        </p>
+        <p>{blog.url}</p>
+        <Likes blog={blog} />
+        <p>{blog.user.name}</p>
+      </div>
+      <div style={minBlogInfo}>
+        <p>{blog.title} - {blog.author}
+          <button onClick={() => setShowAllInfo(true)}>view</button>
+        </p>
+      </div>
     </div>
   );
 };
