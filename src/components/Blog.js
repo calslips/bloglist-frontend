@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Likes from './Likes';
 import BlogDeletion from './BlogDeletion';
 
-const Blog = ({ blog, updates, user, notification, removeBlog }) => {
+const Blog = ({ blog, updates, user, notification, removeBlog, logout }) => {
   const [showAllInfo, setShowAllInfo] = useState(false);
 
   const minBlogInfo = { display: showAllInfo ? 'none' : '' };
@@ -31,6 +31,7 @@ const Blog = ({ blog, updates, user, notification, removeBlog }) => {
               blog={blog}
               notification={notification}
               removeBlog={removeBlog}
+              forceLogout={logout}
             />
           : <></>
         }

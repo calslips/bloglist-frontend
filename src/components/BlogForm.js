@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const BlogForm = ({ notification, addBlog }) => {
+const BlogForm = ({ notification, addBlog, forceLogout }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
@@ -26,7 +26,12 @@ const BlogForm = ({ notification, addBlog }) => {
       setUrl('');
       setCreateBlogFormVisible(false);
     } catch (exception) {
-      notification('Title and url are required to add new blog', true);
+      if (JSON.stringify(exception).includes('401')) {
+        forceLogout();
+        notification('Session timed out: Log back in to complete operation', true);
+      } else {
+        notification('Title and url are required to add new blog', true);
+      }
     }
   };
 

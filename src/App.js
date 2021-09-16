@@ -37,11 +37,16 @@ const App = () => {
     }, 5000);
   };
 
-  const handleLogout = (event) => {
+  const handleLogout = () => {
     window.localStorage.removeItem('loggedInUser');
-    noticeContent(`${user.name} logged out successfully`);
+    // noticeContent(`${user.name} logged out successfully`);
     setUser(null);
   };
+
+  const userLogout = () => {
+    handleLogout();
+    noticeContent(`${user.name} logged out successfully`);
+  }
 
   const addBlog = async (newBlog) => {
     const createdBlog = await blogService.create(newBlog);
@@ -74,10 +79,11 @@ const App = () => {
       : <>
           <h2>blogs</h2>
           <Notification notice={notice} />
-          <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
+          <p>{user.name} logged in <button onClick={userLogout}>logout</button></p>
           <BlogForm
             notification={noticeContent}
             addBlog={addBlog}
+            forceLogout={handleLogout}
           />
           {blogs
             .sort((a, b) => b.likes - a.likes)
@@ -89,6 +95,7 @@ const App = () => {
                 user={user}
                 notification={noticeContent}
                 removeBlog={removeBlog}
+                logout={handleLogout}
               />)
           }
         </>
