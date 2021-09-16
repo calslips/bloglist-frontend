@@ -48,6 +48,18 @@ const App = () => {
     setBlogs(blogs.concat(createdBlog));
   };
 
+  const updates = async (blogId, updateObject) => {
+    await blogService.update(blogId, updateObject);
+    const reflectUpdates = await blogService.getAll();
+    setBlogs(reflectUpdates);
+  };
+
+  const removeBlog = async (blogId) => {
+    await blogService.remove(blogId);
+    const newList = await blogService.getAll();
+    setBlogs(newList);
+  }
+
   return (
     <div>
     {user === null
@@ -69,7 +81,15 @@ const App = () => {
           />
           {blogs
             .sort((a, b) => b.likes - a.likes)
-            .map((blog) => <Blog key={blog.id} blog={blog} />)
+            .map((blog) =>
+              <Blog
+                key={blog.id}
+                blog={blog}
+                updates={updates}
+                user={user}
+                notification={noticeContent}
+                removeBlog={removeBlog}
+              />)
           }
         </>
     }

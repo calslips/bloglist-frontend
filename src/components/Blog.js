@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Likes from './Likes';
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, updates, user, notification, removeBlog }) => {
   const [showAllInfo, setShowAllInfo] = useState(false);
 
   const minBlogInfo = { display: showAllInfo ? 'none' : '' };
@@ -16,15 +16,23 @@ const Blog = ({ blog }) => {
     marginBottom: 5
   };
 
-    return (
+  const deleteBlog = async () => {
+    if (window.confirm(`Remove blog '${blog.title}' by ${blog.author}`)) {
+      await removeBlog(blog.id);
+      notification(`Removed blog '${blog.title}' by ${blog.author}`);
+    }
+  }
+
+  return (
     <div style={blogStyle}>
       <div style={maxBlogInfo}>
         <p>{blog.title} - {blog.author}
           <button onClick={() => setShowAllInfo(false)}>hide</button>
         </p>
         <p>{blog.url}</p>
-        <Likes blog={blog} />
+        <Likes blog={blog} updates={updates} />
         <p>{blog.user.name}</p>
+        {(user.name === blog.user.name) ? <button onClick={deleteBlog}>remove</button> : <></>}
       </div>
       <div style={minBlogInfo}>
         <p>{blog.title} - {blog.author}
