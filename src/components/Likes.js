@@ -10,14 +10,14 @@ const Likes = ({ blog, updates }) => {
       const updateLikes = {
         likes: likes + 1
       };
-      await updates(blog.id, updateLikes);
+      updates(blog.id, updateLikes);
       setLikes(updateLikes.likes);
       setAlreadyLiked(likeStatus);
     } else {
       const updateLikes = {
         likes: likes - 1
       };
-      await updates(blog.id, updateLikes);
+      updates(blog.id, updateLikes);
       setLikes(updateLikes.likes);
       setAlreadyLiked(likeStatus);
     }
