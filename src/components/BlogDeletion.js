@@ -14,18 +14,18 @@ const BlogDeletion = ({ blog, notification, removeBlog, forceLogout }) => {
         notification('Session timed out: Log back in to complete operation', true);
       }
     }
-  }
+  };
 
   return (
     <button onClick={deleteBlog}>remove</button>
   );
-}
+};
 
 BlogDeletion.propTypes = {
   blog: PropTypes.object.isRequired,
   notification: PropTypes.func.isRequired,
   removeBlog: PropTypes.func.isRequired,
   forceLogout: PropTypes.func.isRequired
-}
+};
 
 export default BlogDeletion;

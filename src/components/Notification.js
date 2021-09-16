@@ -26,7 +26,7 @@ const Notification = ({ notice }) => {
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
-  }
+  };
 
   notice.error
     ? noticeStyle = error
@@ -37,6 +37,6 @@ const Notification = ({ notice }) => {
 
 Notification.propTypes = {
   notice: PropTypes.object
-}
+};
 
 export default Notification;

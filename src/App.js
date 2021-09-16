@@ -39,14 +39,13 @@ const App = () => {
 
   const handleLogout = () => {
     window.localStorage.removeItem('loggedInUser');
-    // noticeContent(`${user.name} logged out successfully`);
     setUser(null);
   };
 
   const userLogout = () => {
     handleLogout();
     noticeContent(`${user.name} logged out successfully`);
-  }
+  };
 
   const addBlog = async (newBlog) => {
     const createdBlog = await blogService.create(newBlog);
@@ -63,12 +62,12 @@ const App = () => {
     await blogService.remove(blogId);
     const newList = await blogService.getAll();
     setBlogs(newList);
-  }
+  };
 
   return (
     <div>
-    {user === null
-      ? <>
+      {user === null
+        ? <>
           <h2>log in to application</h2>
           <Notification notice={notice} />
           <LoginForm
@@ -76,7 +75,7 @@ const App = () => {
             login={establishUser}
           />
         </>
-      : <>
+        : <>
           <h2>blogs</h2>
           <Notification notice={notice} />
           <p>{user.name} logged in <button onClick={userLogout}>logout</button></p>
@@ -99,9 +98,9 @@ const App = () => {
               />)
           }
         </>
-    }
+      }
     </div>
   );
-}
+};
 
 export default App;

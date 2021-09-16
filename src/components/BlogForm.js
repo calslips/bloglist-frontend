@@ -83,6 +83,6 @@ BlogForm.propTypes = {
   notification: PropTypes.func.isRequired,
   addBlog: PropTypes.func.isRequired,
   forceLogout: PropTypes.func.isRequired
-}
+};
 
 export default BlogForm;

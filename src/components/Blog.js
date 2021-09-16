@@ -29,11 +29,11 @@ const Blog = ({ blog, updates, user, notification, removeBlog, logout }) => {
         <p>{blog.user.name}</p>
         {(user.name === blog.user.name)
           ? <BlogDeletion
-              blog={blog}
-              notification={notification}
-              removeBlog={removeBlog}
-              forceLogout={logout}
-            />
+            blog={blog}
+            notification={notification}
+            removeBlog={removeBlog}
+            forceLogout={logout}
+          />
           : <></>
         }
       </div>
@@ -53,6 +53,6 @@ Blog.propTypes = {
   notification: PropTypes.func.isRequired,
   removeBlog: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired
-}
+};
 
-export default Blog
+export default Blog;
