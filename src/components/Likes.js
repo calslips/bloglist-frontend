@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import blogRequests from '../services/blogs';
 
-const Likes = ({ blog }) => {
+const Likes = ({ blog, updates }) => {
   const [likes, setLikes] = useState(blog.likes);
   const [alreadyLiked, setAlreadyLiked] = useState(false);
 
@@ -10,16 +9,14 @@ const Likes = ({ blog }) => {
       const updateLikes = {
         likes: likes + 1
       };
-      await blogRequests
-        .update(blog.id, updateLikes);
+      await updates(blog.id, updateLikes);
       setLikes(updateLikes.likes);
       setAlreadyLiked(likeStatus);
     } else {
       const updateLikes = {
         likes: likes - 1
       };
-      await blogRequests
-        .update(blog.id, updateLikes);
+      await updates(blog.id, updateLikes);
       setLikes(updateLikes.likes);
       setAlreadyLiked(likeStatus);
     }
