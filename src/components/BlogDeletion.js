@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const BlogDeletion = ({ blog, notification, removeBlog, forceLogout }) => {
   const deleteBlog = async () => {
@@ -18,6 +19,13 @@ const BlogDeletion = ({ blog, notification, removeBlog, forceLogout }) => {
   return (
     <button onClick={deleteBlog}>remove</button>
   );
+}
+
+BlogDeletion.propTypes = {
+  blog: PropTypes.object.isRequired,
+  notification: PropTypes.func.isRequired,
+  removeBlog: PropTypes.func.isRequired,
+  forceLogout: PropTypes.func.isRequired
 }
 
 export default BlogDeletion;

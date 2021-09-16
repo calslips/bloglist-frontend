@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const BlogForm = ({ notification, addBlog, forceLogout }) => {
   const [title, setTitle] = useState('');
@@ -77,5 +78,11 @@ const BlogForm = ({ notification, addBlog, forceLogout }) => {
     </div>
   );
 };
+
+BlogForm.propTypes = {
+  notification: PropTypes.func.isRequired,
+  addBlog: PropTypes.func.isRequired,
+  forceLogout: PropTypes.func.isRequired
+}
 
 export default BlogForm;
