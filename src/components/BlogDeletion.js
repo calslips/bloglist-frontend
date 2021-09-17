@@ -23,9 +23,9 @@ const BlogDeletion = ({ blog, notification, removeBlog, forceLogout }) => {
 
 BlogDeletion.propTypes = {
   blog: PropTypes.object.isRequired,
-  notification: PropTypes.func.isRequired,
-  removeBlog: PropTypes.func.isRequired,
-  forceLogout: PropTypes.func.isRequired
+  notification: PropTypes.func,
+  removeBlog: PropTypes.func,
+  forceLogout: PropTypes.func
 };
 
 export default BlogDeletion;

@@ -80,9 +80,9 @@ const BlogForm = ({ notification, addBlog, forceLogout }) => {
 };
 
 BlogForm.propTypes = {
-  notification: PropTypes.func.isRequired,
-  addBlog: PropTypes.func.isRequired,
-  forceLogout: PropTypes.func.isRequired
+  notification: PropTypes.func,
+  addBlog: PropTypes.func,
+  forceLogout: PropTypes.func
 };
 
 export default BlogForm;

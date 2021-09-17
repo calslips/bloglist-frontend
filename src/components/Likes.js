@@ -39,7 +39,7 @@ const Likes = ({ blog, updates }) => {
 
 Likes.propTypes = {
   blog: PropTypes.object.isRequired,
-  updates: PropTypes.func.isRequired
+  updates: PropTypes.func
 };
 
 export default Likes;

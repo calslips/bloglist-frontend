@@ -49,8 +49,8 @@ const LoginForm = ({ notification, login }) => {
 };
 
 LoginForm.propTypes = {
-  notification: PropTypes.func.isRequired,
-  login: PropTypes.func.isRequired
+  notification: PropTypes.func,
+  login: PropTypes.func
 };
 
 export default LoginForm;
