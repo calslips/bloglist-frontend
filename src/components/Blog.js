@@ -19,8 +19,8 @@ const Blog = ({ blog, updates, user, notification, removeBlog, logout }) => {
   };
 
   return (
-    <div style={blogStyle}>
-      <div style={maxBlogInfo}>
+    <div className='blog' style={blogStyle}>
+      <div className='moreInfo' style={maxBlogInfo}>
         <p>{blog.title} - {blog.author}
           <button onClick={() => setShowAllInfo(false)}>hide</button>
         </p>
@@ -37,7 +37,7 @@ const Blog = ({ blog, updates, user, notification, removeBlog, logout }) => {
           : <></>
         }
       </div>
-      <div style={minBlogInfo}>
+      <div className='lessInfo' style={minBlogInfo}>
         <p>{blog.title} - {blog.author}
           <button onClick={() => setShowAllInfo(true)}>view</button>
         </p>
@@ -48,11 +48,11 @@ const Blog = ({ blog, updates, user, notification, removeBlog, logout }) => {
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  updates: PropTypes.func.isRequired,
+  updates: PropTypes.func,
   user: PropTypes.object.isRequired,
-  notification: PropTypes.func.isRequired,
-  removeBlog: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired
+  notification: PropTypes.func,
+  removeBlog: PropTypes.func,
+  logout: PropTypes.func
 };
 
 export default Blog;
