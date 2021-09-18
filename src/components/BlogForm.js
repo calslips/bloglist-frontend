@@ -30,7 +30,7 @@ const BlogForm = ({ notification, addBlog, forceLogout }) => {
       if (JSON.stringify(exception).includes('401')) {
         forceLogout();
         notification('Session timed out: Log back in to complete operation', true);
-      } else {
+      } else if (JSON.stringify(exception).includes('400')) {
         notification('Title and url are required to add new blog', true);
       }
     }
@@ -47,6 +47,7 @@ const BlogForm = ({ notification, addBlog, forceLogout }) => {
           <div>
             title:
             <input
+              id='title'
               type='text'
               value={title}
               name='Title'
@@ -56,6 +57,7 @@ const BlogForm = ({ notification, addBlog, forceLogout }) => {
           <div>
             author:
             <input
+              id='author'
               type='text'
               value={author}
               name='Author'
@@ -65,6 +67,7 @@ const BlogForm = ({ notification, addBlog, forceLogout }) => {
           <div>
             url:
             <input
+              id='url'
               type='text'
               value={url}
               name='Url'
