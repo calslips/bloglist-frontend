@@ -55,7 +55,7 @@ describe('Blog app', function() {
       cy.get('.blog').should('contain', 'Test Title - Test Author');
     });
 
-    it.only('A blog can be liked', function() {
+    it('A blog can be liked', function() {
       cy.createBlog({
         title: 'Persist',
         author: 'Rando Man',
@@ -77,6 +77,51 @@ describe('Blog app', function() {
       cy.get('@blogToLike').contains('likes 0');
       cy.get('@blogToLike').contains('like').click();
       cy.get('@blogToLike').contains('likes 1');
+    });
+
+    it('A blog can be removed by its creator', function() {
+      cy.createBlog({
+        title: 'Persist',
+        author: 'Rando Man',
+        url: 'https://bloglife.com'
+      });
+      cy.createBlog({
+        title: 'Shortlived',
+        author: 'Minute Man',
+        url: 'https://toblogornottoblog.info'
+      });
+      cy.createBlog({
+        title: 'Must Blog On',
+        author: 'Blogging Blogger',
+        url: 'https://www.foreverblog.net'
+      });
+
+      cy.get('.lessInfo').contains('Shortlived').contains('view').click();
+      cy.get('.moreInfo').contains('Shortlived').parent().contains('remove').click();
+      cy.get('.notice').contains('Removed blog \'Shortlived\' by Minute Man');
+      cy.get('.blog').should('not.contain', 'Shortlived');
+    });
+
+    it('A blog cannot be removed by another user', function() {
+      const newUser = {
+        name: 'Gummy Flapper',
+        username: 'noremoval',
+        password: 'womp'
+      };
+      cy.request('POST', 'http://localhost:3003/api/users', newUser);
+
+      cy.createBlog({
+        title: 'U Can\'t Touch This',
+        author: 'MC Hammer',
+        url: 'https://blogsong.biz'
+      });
+
+      cy.contains('logout').click();
+      cy.login({ username: 'noremoval', password: 'womp' });
+
+      cy.get('.lessInfo').contains('U Can\'t Touch This').contains('view').click();
+      cy.get('.moreInfo').contains('U Can\'t Touch This').parent().as('unremovableBlog');
+      cy.get('@unremovableBlog').should('not.contain', 'remove');
     });
   });
 });
