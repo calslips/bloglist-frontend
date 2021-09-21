@@ -54,5 +54,19 @@ describe('Blog app', function() {
       cy.get('.notice').should('include.text', 'added')
       cy.get('.blog').should('contain', 'Test Title - Test Author')
     })
+
+    it('A blog can be liked', function() {
+      cy.createBlog({
+        title: 'More To Add',
+        author: 'Juan Plause',
+        url: 'https://www.blogaddition.org'
+      })
+
+      cy.get('.blog').should('contain', 'More To Add').as('blogInterest')
+      cy.get('@blogInterest').contains('view').click()
+      cy.get('@blogInterest').contains('likes 0')
+      cy.get('@blogInterest').contains('like').click()
+      cy.get('@blogInterest').contains('likes 1')
+    })
   })
 });
