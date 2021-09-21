@@ -4,7 +4,7 @@ describe('Blog app', function() {
     const user = {
       name: 'Test City',
       username: 'clogtheblog',
-      password: 'test123123test'
+      password: 'test'
     }
     cy.request('POST', 'http://localhost:3003/api/users', user)
     cy.visit('http://localhost:3000')
@@ -20,7 +20,7 @@ describe('Blog app', function() {
   describe('Login', function() {
     it('succeeds with correct credentials', function() {
       cy.get('#username').type('clogtheblog')
-      cy.get('#password').type('test123123test')
+      cy.get('#password').type('test')
       cy.get('form').submit()
 
       cy.get('.notice').should('contain', 'logged in successfully')
@@ -36,6 +36,29 @@ describe('Blog app', function() {
       cy.get('.notice').should('contain', 'Invalid username or password')
         .and('have.css', 'color', 'rgb(255, 0, 0)')
       cy.get('h2').should('contain', 'log in to application')
+    })
+  })
+
+  describe('When logged in', function() {
+    beforeEach(function() {
+      cy.request('POST', 'http://localhost:3003/api/login', {
+        username: 'clogtheblog',
+        password: 'test'
+      }).then(({ body }) => {
+        localStorage.setItem('loggedInUser', JSON.stringify(body))
+        cy.visit('http://localhost:3000')
+      })
+    })
+
+    it.only('A blog can be created', function() {
+      cy.contains('create new blog').click()
+      cy.get('#title').type('Test Title')
+      cy.get('#author').type('Test Author')
+      cy.get('#url').type('https://blog.testblog.com')
+      cy.get('form').submit()
+
+      cy.get('.notice').should('include.text', 'added')
+      cy.get('.blog').should('contain', 'Test Title - Test Author')
     })
   })
 });
