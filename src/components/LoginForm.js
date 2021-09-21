@@ -28,6 +28,7 @@ const LoginForm = ({ notification, login }) => {
       <div>
         username
         <input
+          id='username'
           type='text'
           value={username}
           name='Username'
@@ -37,6 +38,7 @@ const LoginForm = ({ notification, login }) => {
       <div>
         password
         <input
+          id='password'
           type='password'
           value={password}
           name='Password'

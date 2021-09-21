@@ -32,7 +32,7 @@ const Notification = ({ notice }) => {
     ? noticeStyle = error
     : noticeStyle = success;
 
-  return <div style={noticeStyle}>{notice.message}</div>;
+  return <div className='notice' style={noticeStyle}>{notice.message}</div>;
 };
 
 Notification.propTypes = {
