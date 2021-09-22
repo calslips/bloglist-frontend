@@ -54,14 +54,16 @@ const App = () => {
 
   const updates = async (blogId, updateObject) => {
     await blogService.update(blogId, updateObject);
-    const reflectUpdates = await blogService.getAll();
-    setBlogs(reflectUpdates);
+    const blogToUpdate = blogs.find((blog) => blog.id === blogId);
+    setBlogs(blogs.map((blog) => blog.id === blogId
+      ? { ...blogToUpdate, ...updateObject }
+      : blog
+    ));
   };
 
   const removeBlog = async (blogId) => {
     await blogService.remove(blogId);
-    const newList = await blogService.getAll();
-    setBlogs(newList);
+    setBlogs(blogs.filter((blog) => blog.id !== blogId));
   };
 
   return (

@@ -158,7 +158,6 @@ describe('Blog app', function() {
 
       cy.get('.moreInfo').contains('fourth').parent().contains('like').click();
 
-      cy.wait(300);
       cy.checkBlogOrder('.likes');
     });
   });
