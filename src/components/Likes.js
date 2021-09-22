@@ -26,11 +26,11 @@ const Likes = ({ blog, updates }) => {
   return (
     <>
       {alreadyLiked
-        ? <p>likes {likes}
-          <button onClick={() => {likeBlog(false);}}>unlike</button>
+        ? <p className='likes'>
+          likes {likes} <button onClick={() => {likeBlog(false);}}>unlike</button>
         </p>
-        : <p>likes {likes}
-          <button onClick={() => {likeBlog(true);}}>like</button>
+        : <p className='likes'>
+          likes {likes} <button onClick={() => {likeBlog(true);}}>like</button>
         </p>
       }
     </>

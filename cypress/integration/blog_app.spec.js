@@ -123,5 +123,43 @@ describe('Blog app', function() {
       cy.get('.moreInfo').contains('U Can\'t Touch This').parent().as('unremovableBlog');
       cy.get('@unremovableBlog').should('not.contain', 'remove');
     });
+
+    it('blogs are listed by likes in descending order', function() {
+      cy.createBlog({
+        title: 'first blog',
+        author: 'Arthur I',
+        url: 'https://blog.one.com',
+        likes: 3
+      });
+      cy.createBlog({
+        title: 'second blog',
+        author: 'Beatrice II',
+        url: 'https://blog.two.com',
+        likes: 5
+      });
+      cy.createBlog({
+        title: 'third blog',
+        author: 'Charles III',
+        url: 'https://blog.three.com',
+        likes: 1
+      });
+      cy.createBlog({
+        title: 'fourth blog',
+        author: 'Diana IV',
+        url: 'https://blog.four.com',
+        likes: 5
+      });
+
+      cy.get('.blog').each(() => {
+        cy.get('.lessInfo').filter(':visible').contains('view').click();
+      });
+
+      cy.checkBlogOrder('.likes');
+
+      cy.get('.moreInfo').contains('fourth').parent().contains('like').click();
+
+      cy.wait(300);
+      cy.checkBlogOrder('.likes');
+    });
   });
 });
